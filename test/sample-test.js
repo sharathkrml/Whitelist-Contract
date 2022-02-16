@@ -23,16 +23,16 @@ describe("Whitelist Contract", () => {
       expect(await WhitelistContract.numAddressesWhitelisted()).to.equal(0);
     });
     it("Whitelist an account", async () => {
-      await WhitelistContract.connect(addrList[0]).addAddressToWhitelist();
+      await WhitelistContract.connect(addr).addAddressToWhitelist();
       expect(await WhitelistContract.numAddressesWhitelisted()).to.equal(1);
       expect(
-        await WhitelistContract.whitelistedAddresses(addrList[0].address)
+        await WhitelistContract.whitelistedAddresses(addr.address)
       ).to.equal(true);
     });
     it("Sender has already been whitelisted", async () => {
-      await WhitelistContract.connect(addrList[0]).addAddressToWhitelist();
+      await WhitelistContract.connect(addr).addAddressToWhitelist();
       await expect(
-        WhitelistContract.connect(addrList[0]).addAddressToWhitelist()
+        WhitelistContract.connect(addr).addAddressToWhitelist()
       ).to.be.revertedWith("Sender has already been whitelisted");
     });
     it("Cannot Whitelist more that 10 addresses", async () => {
